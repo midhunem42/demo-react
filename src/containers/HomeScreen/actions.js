@@ -3,7 +3,8 @@ import {
   ADD_NEW_USER,
   FILTER_USER,
   SET_USERS,
-  SET_FILTERED_USER
+  SET_FILTERED_USER,
+  RESET_LIST
 } from "./constants";
 
 export const fetchUserList = () => {
@@ -23,4 +24,7 @@ export const setUserList = userList => {
 
 export const setFilteredUserList = userList => {
   return { type: SET_FILTERED_USER, payload: userList };
+};
+export const resetList = () => {
+  return { type: RESET_LIST };
 };

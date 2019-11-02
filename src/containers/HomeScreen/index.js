@@ -4,6 +4,7 @@ import User from "../../components/User";
 import Input from "../../components/Input";
 
 import { filterUser, setFilteredUserList } from "./actions";
+import { logOutUser } from "../../store/global/actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 class HomeScreen extends Component {
@@ -31,6 +32,10 @@ class HomeScreen extends Component {
     this.setState({ [name]: value });
     search(value);
   };
+
+  _handleLogout = () => {
+    this.props.logOut();
+  };
   render() {
     const { filteredList } = this.props.homeReducer;
     return (
@@ -48,6 +53,14 @@ class HomeScreen extends Component {
               name="search"
               onChange={this._handleChange}
             />
+            <div>
+              <button
+                className="btn btn-outline-primary"
+                onClick={this._handleLogout}
+              >
+                Logout
+              </button>
+            </div>
           </div>
           <Link
             className="btn btn-primary"
@@ -78,7 +91,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     search: query => dispatch(filterUser(query)),
-    setFilteredList: users => dispatch(setFilteredUserList(users))
+    setFilteredList: users => dispatch(setFilteredUserList(users)),
+    logOut: () => dispatch(logOutUser())
   };
 };
 export default connect(

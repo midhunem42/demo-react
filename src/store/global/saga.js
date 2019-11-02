@@ -1,9 +1,9 @@
 import { put, takeEvery } from "redux-saga/effects";
-import { LOGIN_SUBMIT } from "./constants";
+import { LOGIN_SUBMIT, LOGOUT } from "./constants";
 import authDB from "../../utils/authDB.json";
 import history from "../../history";
 import { setLoginResponse, setLoginError } from "./actions";
-import { fetchUserList } from "../../containers/HomeScreen/actions";
+import { fetchUserList, resetList } from "../../containers/HomeScreen/actions";
 
 // eslint-disable-next-line require-yield
 function* loginSubmit(action) {
@@ -24,9 +24,13 @@ function* loginSubmit(action) {
     }
   } catch (error) {}
 }
-
+function* logOut(action) {
+  yield put(resetList());
+  history.push("/login");
+}
 function* globalSaga() {
   yield takeEvery(LOGIN_SUBMIT, loginSubmit);
+  yield takeEvery(LOGOUT, logOut);
 }
 
 export default globalSaga;

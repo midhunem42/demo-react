@@ -1,5 +1,5 @@
 import { fromJS } from "immutable";
-import { SET_TOKEN, SET_LOGIN_ERROR } from "./constants";
+import { SET_TOKEN, SET_LOGIN_ERROR, LOGOUT } from "./constants";
 
 /*
  * Global reducer for storing all global data
@@ -21,6 +21,8 @@ const globalReducer = (state = initialDetails, action) => {
       return state.set("token", action.payload);
     case SET_LOGIN_ERROR:
       return state.set("loginError", action.payload);
+    case LOGOUT:
+      return state.set("loginError", null).set("token", null);
     default:
       break;
   }

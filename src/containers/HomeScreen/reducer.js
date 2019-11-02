@@ -1,5 +1,5 @@
 import { fromJS } from "immutable";
-import { SET_USERS, SET_FILTERED_USER } from "./constants";
+import { SET_USERS, SET_FILTERED_USER, RESET_LIST } from "./constants";
 
 /*
  * HomeScreen reducer for storing all global data
@@ -21,6 +21,8 @@ const homeReducer = (state = initialDetails, action) => {
       return state.set("userList", action.payload);
     case SET_FILTERED_USER:
       return state.set("filteredList", action.payload);
+    case RESET_LIST:
+      return state.set("filteredList", []).set("userList", []);
     default:
       break;
   }
