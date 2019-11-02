@@ -10,17 +10,21 @@ class Input extends Component {
   handleValidate = e => {
     const { onChange, name, rules } = this.props;
     const value = e.target.value;
+    let isValid = false;
     rules.forEach(rule => {
       const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (rule.condition === "required" && value === "") {
         this.setState({ errorMessage: rule.message });
+        isValid = false;
       } else if (rule.condition === "email" && !EMAIL_REGEXP.test(value)) {
         this.setState({ errorMessage: rule.message });
+        isValid = false;
       } else {
         this.setState({ errorMessage: null });
+        isValid = true;
       }
     });
-    onChange(value, name);
+    onChange(value, name, isValid);
   };
   render() {
     const { type, placeholder, id } = this.props;
@@ -43,8 +47,8 @@ class Input extends Component {
 }
 
 Input.defaultProps = {
-  onChange: (value, name) => {
-    console.log(value, name);
+  onChange: (value, name, isValid) => {
+    console.log(value, name, isValid);
   },
   name: "input",
   rules: []

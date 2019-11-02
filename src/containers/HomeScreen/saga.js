@@ -1,5 +1,5 @@
 /* eslint-disable require-yield */
-import { put, takeEvery, select, fork, call, delay } from "redux-saga/effects";
+import { put, takeEvery, select, call } from "redux-saga/effects";
 import { FETCH_USERS, ADD_NEW_USER, FILTER_USER } from "./constants";
 import Api from "../../api";
 import ApiConstants from "../../api/Apiconstants";
@@ -48,6 +48,7 @@ function* addNewUser(action) {
     };
     userList.push(newUser);
     yield put(setUserList(userList));
+    yield put(setFilteredUserList(userList));
     history.push("/home");
   } catch (error) {}
 }

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { nonProtectedRoute, protectedRoutes } from "../../routes";
 import ProtectedRoute from "../../routes/ProtectedRoute";
+import DefaultRoute from "../../routes/DefaultRoute";
+
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import LoginScreen from "../../containers/LoginScreen";
@@ -23,8 +25,9 @@ class Authenticated extends Component {
         </Route>
         {nonProtectedRoute.map((prop, key) => {
           return (
-            <Route
+            <DefaultRoute
               exact
+              authenticated={isAuthenticated}
               path={prop.path}
               key={key}
               component={prop.component}

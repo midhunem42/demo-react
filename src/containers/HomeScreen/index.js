@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import User from "../../components/User";
 import Input from "../../components/Input";
 
-import { fetchUserList, filterUser } from "./actions";
+import { filterUser, setFilteredUserList } from "./actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 class HomeScreen extends Component {
@@ -13,10 +13,20 @@ class HomeScreen extends Component {
       search: undefined
     };
   }
+
+  /**
+   * sets latest userList when mounting
+   */
   componentDidMount() {
-    this.props.fetchData();
+    const { homeReducer, setFilteredList } = this.props;
+    const { userList } = homeReducer;
+    setFilteredList(userList);
   }
-  _handleChange = (value, name) => {
+
+  /**
+   * filter the user list
+   */
+  _handleChange = (value, name, isValid) => {
     const { search } = this.props;
     this.setState({ [name]: value });
     search(value);
@@ -67,8 +77,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: () => dispatch(fetchUserList()),
-    search: query => dispatch(filterUser(query))
+    search: query => dispatch(filterUser(query)),
+    setFilteredList: users => dispatch(setFilteredUserList(users))
   };
 };
 export default connect(

@@ -11,14 +11,35 @@ class AddUserScreen extends Component {
     super(props);
     this.state = {
       title: "mr",
-      first: null,
-      last: null,
+      first: {
+        value: null,
+        isValid: false
+      },
+      last: {
+        value: null,
+        isValid: false
+      },
       gender: "male",
-      email: null,
-      username: null,
-      password: null,
-      phone: null,
-      dob: null,
+      email: {
+        value: null,
+        isValid: false
+      },
+      username: {
+        value: null,
+        isValid: false
+      },
+      password: {
+        value: null,
+        isValid: false
+      },
+      phone: {
+        value: null,
+        isValid: false
+      },
+      dob: {
+        value: null,
+        isValid: false
+      },
       error: false
     };
   }
@@ -27,26 +48,56 @@ class AddUserScreen extends Component {
     return val === undefined || val == null || val.length <= 0 ? true : false;
   };
 
+  /**
+   * Submitting the values
+   */
   handleSubmit = () => {
-    const { first, last, email, password, phone, dob } = this.state;
+    const {
+      first,
+      last,
+      email,
+      password,
+      phone,
+      dob,
+      title,
+      gender,
+      username
+    } = this.state;
     if (
-      this.isEmpty(first) ||
-      this.isEmpty(last) ||
-      this.isEmpty(email) ||
-      this.isEmpty(password) ||
-      this.isEmpty(phone) ||
-      this.isEmpty(dob)
+      this.isEmpty(first.value) ||
+      this.isEmpty(last.value) ||
+      this.isEmpty(email.value) ||
+      this.isEmpty(password.value) ||
+      this.isEmpty(phone.value) ||
+      this.isEmpty(dob.value) ||
+      this.isEmpty(username.value) ||
+      !email.isValid
     ) {
       this.setState({ error: true });
     } else {
-      this.props.addUser(this.state);
+      const request = {
+        first: first.value,
+        last: last.value,
+        email: email.value,
+        password: password.value,
+        phone: phone.value,
+        dob: phone.value,
+        title,
+        gender,
+        username: username.value
+      };
+      this.props.addUser(request);
     }
   };
-  _handleChange = (value, name) => {
-    this.setState({ [name]: value });
+  /**
+   * input value is stored
+   */
+  _handleChange = (value, name, isValid) => {
     if (this.state.error) {
       this.setState({ error: false });
     }
+    const data = { value, isValid };
+    this.setState({ [name]: data });
   };
   render() {
     const { gender } = this.state;

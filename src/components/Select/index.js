@@ -11,7 +11,7 @@ const Select = props => {
         id={id}
         autoComplete="off"
         onChange={e => {
-          onChange(e.target.value, name);
+          onChange(e.target.value, name, true);
         }}
         className="form-control"
         value={value}
@@ -28,7 +28,7 @@ const Select = props => {
   );
 };
 Select.defaultProps = {
-  onChange: (e, name) => {
+  onChange: (e, name, isValid) => {
     console.log(e.target.value, name);
   },
   name: "Select",

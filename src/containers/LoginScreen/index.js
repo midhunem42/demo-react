@@ -12,7 +12,7 @@ class LoginScreen extends Component {
       password: null
     };
   }
-  _handleChange = (val, name) => {
+  _handleChange = (val, name,isValid) => {
     this.setState({ [name]: val });
     const { globalReducer, resetError } = this.props;
     if (globalReducer.loginError !== null) {
